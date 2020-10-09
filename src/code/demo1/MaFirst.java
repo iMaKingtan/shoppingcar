@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -23,24 +24,11 @@ public class MaFirst extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/HTML;charset=utf-8");
         request.setCharacterEncoding("utf-8");
-        Cookie[] cookies = request.getCookies();
-        String username = null;
-        String password = null;
-        if (cookies!=null){
-            for (Cookie cookie:cookies){
-                if (cookie.getName().equals("username")){
-                    username = URLDecoder.decode(cookie.getValue(),"utf-8");
+        PrintWriter writer = response.getWriter();
+        String name = request.getParameter("bookname");
+        Cookie cookie = new Cookie("car", URLEncoder.encode(name,"utf-8"));
+        response.addCookie(cookie);
 
-                }else if (cookie.getName().equals("password")){
-                    password = cookie.getValue();
-                }
-            }
-        }
-        if (username!=null&&password!=null){
-            System.out.println("登录成功,用户名"+username);
-        }else {
-            System.out.println("登录失败");
-        }
 
 
     }

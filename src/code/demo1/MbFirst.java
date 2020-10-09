@@ -8,9 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -20,72 +22,31 @@ import java.util.concurrent.TimeUnit;
 public class MbFirst extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/HTML;charset=utf-8");
         request.setCharacterEncoding("utf-8");
+        PrintWriter writer = response.getWriter();
         Cookie[] cookies = request.getCookies();
-        String username = null;
-        String password = null;
-        String tenday = null;
-
-        username = request.getParameter("username");
-        password = request.getParameter("password");
-        tenday = request.getParameter("tenday");
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-        boolean flag = false;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/tract?useSSL=false&serverTimezone=UTC", "root", "MAKINGTAN");
-            String sql = "select * from book where bookname = ? and price = ?";
-            statement = connection.prepareStatement(sql);
-            statement.setString(1,username);
-            statement.setString(2,password);
-            rs = statement.executeQuery();
-            if (rs.next()){
-                flag = true;
-
-            }
-
-        }catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }finally {
-            if (connection!=null){
-                try {
-                    connection.close();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+        if (cookies!=null){
+            ArrayList<String> al = new ArrayList<>();
+            for (Cookie cookie:cookies){
+                if ("car".equals(cookie.getName())){
+                    String name = URLDecoder.decode(cookie.getValue(),"utf-8");
+                    al.add(name);
+                    System.out.println(name);
                 }
             }
-            if (statement!=null){
-                try {
-                    statement.close();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+            if (al.size()==0){
+                writer.print("你的购物车空空如也");
+            }else {
+                for (String str:al){
+                    System.out.println(str);
+                    writer.print(str);
+                    writer.print("<br>");
                 }
             }
-            if (rs!=null){
-                try {
-                    rs.close();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
-            }
-        }
-        if (flag==true){
-            if ("yes".equals(tenday)){
-                String urlUser = URLEncoder.encode(username,"utf-8");
-                Cookie cookie1 = new Cookie("username",urlUser );
-                Cookie cookie2 = new Cookie("password",password );
-                cookie1.setPath(request.getContextPath());
-                cookie2.setPath(request.getContextPath());
-                response.addCookie(cookie1);
-                response.addCookie(cookie2);
-            }
-            response.sendRedirect("/servlettest_war/index.html");
         }else {
-            response.sendRedirect("/servlettest_war/dir/FirstPar.html");
+            writer.print("你的购物车空空如也");
         }
 
 

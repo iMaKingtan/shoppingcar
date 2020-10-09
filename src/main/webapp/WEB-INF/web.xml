@@ -15,7 +15,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>servletb</servlet-name>
-    <url-pattern>/system/b</url-pattern>
+    <url-pattern>/addCar</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>servletname</servlet-name>
@@ -24,7 +24,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>servletname</servlet-name>
-    <url-pattern>/system/login</url-pattern>
+    <url-pattern>/mycar</url-pattern>
   </servlet-mapping>
 
 </web-app>

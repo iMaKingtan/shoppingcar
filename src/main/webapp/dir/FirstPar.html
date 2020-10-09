@@ -7,13 +7,47 @@
 </head>
 <body>
     <h1 align="center"><font color="red">welcome to xian</font></h1>
-    <form action="/servlettest_war/system/login" method="post">
-        username<input type="text" name="username"/><br>
-        password<input type="password" name="password"/><br>
-        <input type="checkbox" name="tenday" value="yes"/>十天免登录<br>
-        <input type="submit" value="login"/>
-    </form>
-    <a href="/servlettest_war/system/b">b测试</a>
+
+    <table border="1" align="center" width="40%">
+        <tr align="center">
+            <th>书名</th>
+            <th>书的价格</th>
+            <th>操作</th>
+        </tr>
+        <tr>
+            <td>三国</td>
+            <td>10</td>
+            <td>
+                <!--                删除要回到本页面-->
+                <a href="/servlettest_war/addCar?bookname=三国">加入购物车</a>
+            </td>
+        </tr>
+        <tr>
+            <td>水浒</td>
+            <td>20</td>
+            <td>
+                <!--                删除要回到本页面-->
+                <a href="/servlettest_war/addCar?bookname=水浒">加入到购物车</a>
+            </td>
+        </tr>
+        <tr>
+            <td>红楼</td>
+            <td>20</td>
+            <td>
+                <!--                删除要回到本页面-->
+                <a href="/servlettest_war/addCar?bookname=红楼">加入到购物车</a>
+            </td>
+        </tr>
+        <tr>
+            <td>西游</td>
+            <td>40</td>
+            <td>
+                <!--                删除要回到本页面-->
+                <a href="/servlettest_war/addCar?bookname=西游">加入到购物车</a>
+            </td>
+        </tr>
+    </table>
+    <a href="/servlettest_war/mycar">我的购物车</a>
 
 </body>
 </html>
